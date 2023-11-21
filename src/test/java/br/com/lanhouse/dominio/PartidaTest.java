@@ -19,12 +19,35 @@ class PartidaTest {
 
         assertThat(partida.getJogo()).isEqualTo(jogo);
         assertThat(partida.getPeriodo()).isEqualTo(periodo);
+        assertThat(partida.getJogadores()).isEmpty();
     }
 
     @Test
     void deve_ser_possivel_adicionar_um_jogador_a_uma_partida() throws Exception {
+        Jogo jogo = criarJogo();
+        Periodo periodo = criarPeriodo();
         Jogador jogador = new Jogador("Higor Nucci", LocalDate.of(1986, 4, 25), "higornucci", "higornucci@gmail.com");
 
+        Partida partida = new Partida(jogo, periodo);
+        partida.adicionar(jogador);
+
+        assertThat(partida.getJogadores())
+                .containsOnly(jogador);
+    }
+
+    @Test
+    void deve_ser_possivel_adicionar_mais_de_um_jogador_a_uma_partida() throws Exception {
+        Jogo jogo = criarJogo();
+        Periodo periodo = criarPeriodo();
+        Jogador jogador1 = new Jogador("Higor Nucci", LocalDate.of(1986, 4, 25), "higornucci", "higornucci@gmail.com");
+        Jogador jogador2 = new Jogador("Enrico Nucci", LocalDate.of(2003, 5, 4), "enriconucci", "enriconucci@gmail.com");
+
+        Partida partida = new Partida(jogo, periodo);
+        partida.adicionar(jogador1);
+        partida.adicionar(jogador2);
+
+        assertThat(partida.getJogadores())
+                .containsOnly(jogador1, jogador2);
     }
 
     private static Periodo criarPeriodo() {
